@@ -1,0 +1,12 @@
+- insert:
+    - id: monitor-banner
+      name: dsh-monitor-banner
+      config:
+        # Point `file` at your own Markdown table. Leave it empty and put the
+        # path in local.config.json instead (git-ignored) if you would rather
+        # not publish a machine-specific path.
+        file: ''
+        # Shown at the head of the strip.
+        label: 'Monitor log'
+        # Days after which the strip turns orange and says the check is due.
+        staleDays: 7

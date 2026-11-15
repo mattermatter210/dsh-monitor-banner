@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Monitor log strip",
+    "description": "A permanent bottom strip showing when the Markdown monitor log was last updated, its newest conclusion, and whether it is past the configured number of days. Click it to copy the file path."
+  }
+}
