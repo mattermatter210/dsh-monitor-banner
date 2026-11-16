@@ -2,11 +2,12 @@
     - id: monitor-banner
       name: dsh-monitor-banner
       config:
-        # Point `file` at your own Markdown table. Leave it empty and put the
-        # path in local.config.json instead (git-ignored) if you would rather
-        # not publish a machine-specific path.
-        file: ''
-        # Shown at the head of the strip.
-        label: 'Monitor log'
-        # Days after which the strip turns orange and says the check is due.
-        staleDays: 7
+        # One entry per log shown on the strip. Each entry takes `file` and
+        # optionally `label` and `staleDays`. Leave the list empty and put it in
+        # local.config.json instead if you would rather not publish a
+        # machine-specific path.
+        files: []
+        # Legacy single-log form still works when `files` is empty:
+        # file: ''
+        # label: ''
+        # staleDays: 7

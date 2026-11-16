@@ -1,40 +1,53 @@
 {
-  "name": "dsh-monitor-banner",
-  "version": "1.0.0",
-  "private": true,
-  "type": "module",
-  "description": "Bottom strip for DeepSeek Harness that reports how old your monitor log is and when the next check is due.",
-  "keywords": [
-    "dsh",
-    "dsh-plugin",
-    "deepseek-harness",
-    "monitor",
-    "reminder",
-    "markdown"
-  ],
-  "license": "MIT",
-  "exports": {
-    ".": "./index.js",
-    "./client": "./client.js",
-    "./locale/*.json": "./locale/*.json",
-    "./icon": "./icon.svg"
-  },
-  "files": [
-    "index.js",
-    "client.js",
-    "cordis.patch.yml",
-    "locale/*.json",
-    "icon.svg",
-    "README.md",
-    "README.zh.md",
-    "LICENSE"
-  ],
-  "dsh": {
-    "bundle": { "patch": "./cordis.patch.yml" },
-    "client": {
-      "platform": "web",
-      "immediately": true,
-      "inject": ["@deepseek-ai/dsh-client-ui-layout"]
-    }
-  }
+    "name":  "dsh-monitor-banner",
+    "version":  "1.1.0",
+    "private":  true,
+    "type":  "module",
+    "description":  "Bottom strip for DeepSeek Harness that reports how old one or more Markdown monitor logs are, and opens them in place.",
+    "keywords":  [
+                     "dsh",
+                     "dsh-plugin",
+                     "deepseek-harness",
+                     "monitor",
+                     "reminder",
+                     "markdown"
+                 ],
+    "license":  "MIT",
+    "exports":  {
+                    ".":  "./index.js",
+                    "./client":  "./client.js",
+                    "./locale/*.json":  "./locale/*.json",
+                    "./icon":  "./icon.svg"
+                },
+    "files":  [
+                  "index.js",
+                  "client.js",
+                  "cordis.patch.yml",
+                  "locale/*.json",
+                  "icon.svg",
+                  "README.md",
+                  "README.zh.md",
+                  "LICENSE",
+                  "CHANGELOG.md"
+              ],
+    "dsh":  {
+                "bundle":  {
+                               "patch":  "./cordis.patch.yml"
+                           },
+                "client":  {
+                               "platform":  "web",
+                               "immediately":  true,
+                               "inject":  [
+                                              "@deepseek-ai/dsh-client-ui-layout"
+                                          ]
+                           }
+            },
+    "repository":  {
+                       "type":  "git",
+                       "url":  "https://github.com/mattermatter210/dsh-monitor-banner.git"
+                   },
+    "homepage":  "https://github.com/mattermatter210/dsh-monitor-banner",
+    "bugs":  {
+                 "url":  "https://github.com/mattermatter210/dsh-monitor-banner/issues"
+             }
 }

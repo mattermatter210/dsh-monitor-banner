@@ -9,16 +9,23 @@ If you keep a checklist you refresh weekly or monthly — market signals, positi
 This plugin moves freshness to a place you cannot miss: the strip under the three columns. Green dot means still fresh, orange means the check is due.
 
 ```text
-● Monitor log: today (2026-11-15) | latest: summary → mildly positive | all fresh
-● Monitor log: 9 days ago (2026-11-06) | latest: CDX HY/iTraxx → no | 9 days stale — run the check
+● Monitor log: today · all fresh                    [ ▾ 5 ]  ↻
+
+Click [ ▾ 5 ] to expand one task per indicator in place:
+  ○ Big-four capex guidance → Raised      quarterly · 1 day ago · fresh
+  ○ CDX HY/iTraxx → No                    weekly · today · fresh
+  ● Citi CESI/CECID → Still rising        monthly · 31 days ago · due
 ```
 
 ## How it works
 
-- The **Host** reads your log file, takes the last table row as the latest conclusion, and computes the age in days.
+- The **Host** treats every indicator in the table as its own task: the `weekly/monthly/quarterly` cadence sets that task's due threshold, and each task reports its own age. The newest row also becomes the overall state.
 - It serves that as JSON at `GET /dsh-monitor-banner/status`.
-- The **Client** mounts into the `shell.bottom` slot (the full-width row under the three columns), refreshes every 30 seconds and whenever the window regains focus.
-- Click the text to copy the file path; click ↻ to read again immediately.
+- The **Client** mounts into the `shell.bottom` slot. Collapsed it is **one 22px line**: `Monitor log: today · all fresh`.
+- **`▾ N` only appears when there is more than one task.** Expanding lists one row per indicator with its own cadence, age, and due state; with a single task the line already says everything, so no control is shown.
+- With several logs configured, the expanded view groups tasks by file and puts **📂** on each file's header row.
+- **Click the text** to open the log in its default application (`.xlsx` goes to WPS/Excel, `.md` to your editor); **📂** reveals it in the file manager; **↻** reads again immediately.
+- When the Host cannot open paths (plain browser, or a file outside the workspace) the click falls back to copying the path and says so in the strip.
 
 ## Install
 
@@ -40,17 +47,35 @@ Refresh the page (Ctrl+R) and the strip appears at the bottom. If it says the lo
 
 | Field | Default | Meaning |
 |---|---|---|
-| `file` | `''` | Absolute path to the log. When empty, `local.config.json` next to the plugin is used instead |
-| `label` | `Monitor log` | Prefix shown in the strip |
+| `files` | `[]` | One entry per log: `{ file, label?, staleDays? }`. Falls back to `local.config.json` when empty |
+| `file` | `''` | Legacy single-log field; still read when `files` is empty |
+| `label` | file name | Prefix shown in the strip; defaults to the file name without its extension |
 | `staleDays` | `7` | Days after which the strip turns orange |
 
-To keep a machine-specific path out of your commits, leave `file` empty and use `local.config.json` (already in `.gitignore`):
+## Watching several logs
+
+Every entry in `files` gets its own row: its own age, its own colour, its own click target.
+
+```yaml
+files:
+  - file: 'C:\Users\me\Desktop\monitor\signals.md'
+    label: 'Signals'
+    staleDays: 7
+  - file: 'D:\notes\positions.md'
+    label: 'Positions'
+    staleDays: 14
+  - file: 'D:\notes\health.md'
+```
+
+More than three rows collapse behind "N more logs — click to expand" so the strip stays short. A file that cannot be read only affects its own row.
+
+To keep machine-specific paths out of your commits, put the same fields in `local.config.json` (already in `.gitignore`):
 
 ```json
 {
-  "file": "C:\\Users\\me\\Desktop\\monitor\\log.md",
-  "label": "Monitor log",
-  "staleDays": 7
+  "files": [
+    { "file": "C:\\Users\\me\\Desktop\\monitor\\signals.md", "label": "Signals", "staleDays": 7 }
+  ]
 }
 ```
 
